@@ -24,5 +24,7 @@ Route.get("/", async () => {
   return { hello: "world" };
 });
 
-Route.post("/venues", "VenuesController.addVenue");
-Route.post("/bookings", "VenuesController.addBooking");
+// Route.post("/venues", "VenuesController.addVenue");
+// Route.post("/bookings", "VenuesController.addBooking");
+Route.resource("venues", "VenuesMakesController").apiOnly();
+Route.resource("venues.fields", "FieldsController").apiOnly();
