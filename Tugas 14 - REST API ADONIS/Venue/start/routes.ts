@@ -26,5 +26,10 @@ Route.get("/", async () => {
 
 // Route.post("/venues", "VenuesController.addVenue");
 // Route.post("/bookings", "VenuesController.addBooking");
-Route.resource("venues", "VenuesMakesController").apiOnly();
-Route.resource("venues.fields", "FieldsController").apiOnly();
+
+Route.group(() => {
+  Route.resource("venues", "VenuesMakesController").apiOnly();
+  Route.resource("venues.fields", "FieldsController").apiOnly();
+  Route.post("/register", "AuthController.register");
+  Route.post("/login", "AuthController.login");
+}).prefix("api/v1");
