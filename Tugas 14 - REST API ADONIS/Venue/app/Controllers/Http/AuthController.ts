@@ -1,8 +1,45 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import { schema, CustomMessages, rules } from "@ioc:Adonis/Core/Validator";
+import { schema } from "@ioc:Adonis/Core/Validator";
 import UserValidator from "App/Validators/UserValidator";
 import User from "App/Models/User";
-import Hash from "@ioc:Adonis/Core/Hash";
+
+/**
+ * @swagger
+ * /api/users:
+ * post:
+ *  tags:
+ *    - Register
+ *  summary: For new user to do registration
+ *  requestBody:
+ *    required: true
+ *    content:
+ *      application/x-www-form-urlencoded:
+ *        description: User payload
+ *        schema:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *              example: 'James Bond'
+ *              required: true
+ *            email:
+ *              type: string
+ *              example: 'Bond007@example.com'
+ *              required: true
+ *            password:
+ *              type: string
+ *              example: 'asdsfijh@1234312'
+ *              required: true
+ *  produces:
+ *    - application/json
+ *  responses:
+ *    200:
+ *      description: Success
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
+ */
 
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
@@ -47,30 +84,4 @@ export default class AuthController {
       });
     }
   }
-
-  //   public async login({ request, response, auth }: HttpContextContract) {
-  //     try {
-  //       const email = request.input("email");
-  //       const password = request.input("password");
-
-  //       // Lookup user manually
-  //       const user = await User.query()
-  //         .where("email", email)
-  //         .whereNull("is_deleted")
-  //         .firstOrFail();
-
-  //       // Verify password
-  //       if (!(await Hash.verify(user.password, password))) {
-  //         return response.unauthorized("Invalid credentials");
-  //       }
-
-  //       // Generate token
-  //       const token = await auth.use("api").generate(user);
-  //     } catch (error) {
-  //       response.badRequest({
-  //         message: "User baru gagal dibuat",
-  //         error: error,
-  //       });
-  //     }
-  //   }
 }
